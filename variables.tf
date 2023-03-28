@@ -1,3 +1,6 @@
+variable "env" {
+  
+}
 variable "vpc_cidr_block" {
   description = "vpc_cidr_block"
   default     = "10.0.0.0/16"
@@ -11,4 +14,3 @@ variable "azs" {
      type        = list(string)
 }
 variable "date" {}
-variable "env" {}
