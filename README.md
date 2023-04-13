@@ -19,3 +19,7 @@ export AWS_SECRET_ACCESS_KEY="zTUzJo9seiERAk28qq4Oenr4QHIXucJ/Gzd9ZQjF"
 export AWS_REGION="us-east-1"
 # export GLOBAL environment variables
 export TF_VAR_az="us-east-1e" 
+
+# encoded error message
+aws sts decode-authorization-message --encoded-message KDmmJmkLKm...iUtfAa --output text | jq '.'
+
