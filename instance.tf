@@ -1,38 +1,11 @@
-# data "aws_ami" "amzn-image" {
-#   #executable_users = ["self"]
-#   most_recent = true
-#   owners      = ["amazon"]
-
-#   filter {
-#     name   = "name"
-#     values = ["amzn2-ami-kernel-5.10-hvm-*-x86_64-gp2"]
-#     #values = ["amzn2-ami-kernel-5.10-hvm-2.0.20230404.1-x86_64-gp2"]
-#   }
-
-#   #   filter {
-#   #     name   = "root-device-type"
-#   #     values = ["ebs"]
-#   #   }
-
-#   filter {
-#     name   = "virtualization-type"
-#     values = ["hvm"]
-#   }
-
-# }
-
-# # resource "aws_key_pair" "linux" {
-# #   key_name   = "linux-key"
-
-# # }
-# resource "aws_instance" "server" {
+# resource "aws_instance" "remote" {
 #   ami                         = data.aws_ami.amzn-image.id
-#   instance_type               = "t2.micro"
+#   instance_type               = "t3.large"
 #   key_name                    = "linux-key"
 #   associate_public_ip_address = true
-#   availability_zone           = var.azs[0]
+#   availability_zone           = var.azs[1]
 #   vpc_security_group_ids      = [aws_security_group.test-sg.id]
-#   subnet_id                   = aws_subnet.pub-subnet1.id
+#   subnet_id                   = aws_subnet.pub-subnet2.id
 #   # user_data_replace_on_change = true # will trigger a destroy and recreate when set to true
 #   # user_data = <<EOF
 #   #             #! /bin/bash
@@ -51,7 +24,7 @@
 #   #user_data = "${file("html.sh")}"
 #   # user_data = file("html.sh")
 #   tags = {
-#     Name    = "${var.env}-server"
+#     Name    = "exec-server"
 #     Created = "${var.Createdby}"
 #     Date    = var.date
 #   }
@@ -71,25 +44,15 @@
 # #   }
 # provisioner "remote-exec" {
 #   inline = [
-#     "touch index.html",
-#      "mkdir -p /home/ec2-user/code",
-#      "chmod 400 packages.sh"
+#     "sudo yum install git -y",
+#      "chmod 400 packages.sh",
+#      "sh /home/ec2-user/packages.sh"
 
 #   ]
 
 # }
 # # provisioner "remote-exec" {
-# #  script = file("packages.sh")
+# #  script = file("/home/ec2-user/packages.sh")
 
 # # }
-# }
-
-
-
-
-# output "ami_name" {
-#   value = data.aws_ami.amzn-image.name
-# }
-# output "ami_id" {
-#   value = data.aws_ami.amzn-image.id
 # }

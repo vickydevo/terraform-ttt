@@ -16,7 +16,7 @@ resource "aws_vpc" "project1" {
 # create subnet
 resource "aws_subnet" "pub-subnet1" {
   vpc_id     = aws_vpc.project1.id
-  cidr_block = var.subnet_cidr_blocks[0]
+  cidr_block = var.subnet_cidr_blocks[2]
   # cidr_block = var.subnet_cidr_blocks[] # no of ipv4 10.0.0.0/24 256
   availability_zone = var.azs[0]
   tags = {
@@ -28,7 +28,7 @@ resource "aws_subnet" "pub-subnet1" {
 
 resource "aws_subnet" "pub-subnet2" {
   vpc_id            = aws_vpc.project1.id
-  cidr_block        = var.subnet_cidr_blocks[1] # no of ipv4 10.0.0.0/24 256
+  cidr_block        = var.subnet_cidr_blocks[3] # no of ipv4 10.0.0.0/24 256
    
   availability_zone = var.azs[1]
   tags = {
@@ -39,7 +39,7 @@ resource "aws_subnet" "pub-subnet2" {
 }
 resource "aws_subnet" "private-subnet1" {
   vpc_id            = aws_vpc.project1.id
-  cidr_block        = var.subnet_cidr_blocks[2] # no of ipv4 10.0.0.0/24 256
+  cidr_block        = var.subnet_cidr_blocks[1] # no of ipv4 10.0.0.0/24 256
   availability_zone = var.azs[2]
   tags = {
     Name    = "${var.env}-pv-snt-1"
@@ -49,7 +49,7 @@ resource "aws_subnet" "private-subnet1" {
 }
 resource "aws_subnet" "private-subnet2" {
   vpc_id            = aws_vpc.project1.id
-  cidr_block        = var.subnet_cidr_blocks[3] # no of ipv4 10.0.0.0/24 256
+  cidr_block        = var.subnet_cidr_blocks[5] # no of ipv4 10.0.0.0/24 256
   availability_zone = var.azs[3]
   tags = {
     Name    = "${var.env}-pv-snt-2"
@@ -101,7 +101,7 @@ resource "aws_security_group" "test-sg" {
   description = "Allow TLS inbound traffic"
   vpc_id      = aws_vpc.project1.id
   ingress {
-    description      = "ssh connectivity inbound traffic"
+    description      = "ssh connectivity"
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
@@ -110,14 +110,14 @@ resource "aws_security_group" "test-sg" {
   }
 
   ingress {
-    description      = "httpd inbound traffic"
+    description      = "http traffic"
     from_port        = 80
     to_port          = 80
     protocol         = "tcp"
     cidr_blocks      =["0.0.0.0/0"]
   }
   ingress {
-    description      = "https inbound traffic"
+    description      = "https traffic"
     from_port        = 443
     to_port          = 443
     protocol         = "tcp"
@@ -140,8 +140,6 @@ resource "aws_security_group" "test-sg" {
     Name = "${var.env}-sg"
   }
 }
-
-
 # data_source  is for picking existing infrastructure
 # data "aws_vpc" "default" {
 #     default = true 
