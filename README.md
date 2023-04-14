@@ -23,3 +23,7 @@ export TF_VAR_az="us-east-1e"
 # encoded error message
 aws sts decode-authorization-message --encoded-message KDmmJmkLKm...iUtfAa --output text | jq '.'
 
+# tee command
+The tee command, used with a pipe, reads standard input, then writes the output of a program to standard output and simultaneously copies it into the specified file or files. Use the tee command to view your output immediately and at the same time, store it for future use.
+
+# user date 
