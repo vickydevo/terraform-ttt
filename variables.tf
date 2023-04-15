@@ -7,10 +7,10 @@ variable "vpc_cidr_block" {
 variable "subnet_cidr_blocks" {
   description = "cidr block range"
   #default     = "10.0.1.0/16"
-  type        = list(string)
+  type = list(string)
 }
 variable "azs" {
-     type        = list(string)
+  type = list(string)
 }
 variable "date" {}
 variable "private_key_path" {}

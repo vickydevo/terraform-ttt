@@ -1,11 +1,11 @@
-
-
-# Create a VPC
+# Create a VPC MODULE 
+# In a MODULE we can have multiple resourdes 
 # resource is for creating new infrastructure
+
 resource "aws_vpc" "project1" {
   #   cidr_block = "10.0.0.0/16" # no of ipv4 10.0.0.0/16 65536
-  cidr_block = var.vpc_cidr_block
-  enable_dns_hostnames = true
+  cidr_block           = var.vpc_cidr_block
+  enable_dns_hostnames = true # in terraform dns hostnames = false by default
   tags = {
     Name    = "${var.env}-vpc"
     Created = "${var.Createdby}"
@@ -27,9 +27,9 @@ resource "aws_subnet" "pub-subnet1" {
 }
 
 resource "aws_subnet" "pub-subnet2" {
-  vpc_id            = aws_vpc.project1.id
-  cidr_block        = var.subnet_cidr_blocks[3] # no of ipv4 10.0.0.0/24 256
-   
+  vpc_id     = aws_vpc.project1.id
+  cidr_block = var.subnet_cidr_blocks[3] # no of ipv4 10.0.0.0/24 256
+
   availability_zone = var.azs[1]
   tags = {
     Name    = "${var.env}-pb-snt-2"
@@ -101,45 +101,46 @@ resource "aws_security_group" "test-sg" {
   description = "Allow TLS inbound traffic"
   vpc_id      = aws_vpc.project1.id
   ingress {
-    description      = "ssh connectivity"
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      =["0.0.0.0/0"]
-      
+    description = "ssh connectivity"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+
   }
 
   ingress {
-    description      = "http traffic"
-    from_port        = 80
-    to_port          = 80
-    protocol         = "tcp"
-    cidr_blocks      =["0.0.0.0/0"]
+    description = "http traffic"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-    description      = "https traffic"
-    from_port        = 443
-    to_port          = 443
-    protocol         = "tcp"
-    cidr_blocks      =["0.0.0.0/0"]
+    description = "https traffic"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
-  ingress  {
-    description      = "web server inbound traffic"
-    from_port        = 8080
-    to_port          = 8080
-    protocol         = "tcp"
-    cidr_blocks      =["0.0.0.0/0"]
+  ingress {
+    description = "web server inbound traffic"
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
-  egress  {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
-   tags = {
+  tags = {
     Name = "${var.env}-sg"
   }
 }
+
 # data_source  is for picking existing infrastructure
 # data "aws_vpc" "default" {
 #     default = true 

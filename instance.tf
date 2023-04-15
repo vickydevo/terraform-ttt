@@ -19,40 +19,12 @@
 #   #             sudo systemctl enable docker.service
 #   #             sudo systemctl start docker.service 
 #   #             sudo docker run -p 8080:8080 nginx
-
 #   #           EOF
-#   #user_data = "${file("html.sh")}"
-#   # user_data = file("html.sh")
+#   #user_data = "${file("packages.sh.sh")}"
+#   # user_data = file("packages.sh.sh")
 #   tags = {
 #     Name    = "exec-server"
 #     Created = "${var.Createdby}"
 #     Date    = var.date
 #   }
-
-#   connection {
-#   type        = "ssh"
-#   host        = self.public_ip
-#   user        = "ec2-user"
-#   private_key = file(var.private_key_path)
-# }
-# provisioner "file" {
-#   source      = "packages.sh"
-#   destination = "/home/ec2-user/packages.sh"
-# }
-# # provisioner "local-exec" {
-# #   command = "touch index.html"
-# #   }
-# provisioner "remote-exec" {
-#   inline = [
-#     "sudo yum install git -y",
-#      "chmod 400 packages.sh",
-#      "sh /home/ec2-user/packages.sh"
-
-#   ]
-
-# }
-# # provisioner "remote-exec" {
-# #  script = file("/home/ec2-user/packages.sh")
-
-# # }
 # }
